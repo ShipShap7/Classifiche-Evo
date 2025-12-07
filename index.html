@@ -1,33 +1,126 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manutenzione in corso Classifiche</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classifiche</title>
+
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 10px;
       font-family: Arial, sans-serif;
       background: #f7f7f7;
+      text-align: center;
     }
-    .widget-container {
-      max-width: 500px;
+
+    .wrapper {
+      max-width: 500px;      /* larghezza tipo “finestra YouTube” */
       margin: 0 auto;
-      padding: 10px;
     }
-    #widget-sa_widget {
+
+    .widget-title {
+      font-size: 18px;
+      margin: 5px 0 10px;
+      color: #333;
+    }
+
+    /* Contenitore “schermo” fisso */
+    .slider {
+      position: relative;
       width: 100%;
-      height: 550px;
+      height: 550px;         /* puoi aumentare o ridurre */
+      border-radius: 10px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #ccc;
+    }
+
+    .widget-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+      overflow: hidden;
+    }
+
+    .widget-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Forzo i widget Scoreaxis ad adattarsi al contenitore */
+    .scoreaxis-widget {
+      width: 100% !important;
+      height: 100% !important;
+      font-size: 14px;
+      background-color: #ffffff;
+      color: #141416;
+      border: 1px solid #ecf1f7;
+      overflow: auto;
+    }
+
+    /* Se vuoi puoi tenere i crediti ma rimpicciolirli un po' */
+    .scoreaxis-widget .widget-main-link {
+      font-size: 11px;
     }
   </style>
 </head>
 <body>
-  <div class="widget-container">
-    <div id="widget-sa_widget"></div>
 
-    <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=sa_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd">
-    </script>
+<div class="wrapper">
+  <div id="widgetTitle" class="widget-title">Classifica Serie A</div>
+
+  <div class="slider">
+    <!-- SLIDE 1 – SERIE A -->
+    <div class="widget-slide active" data-name="Classifica Serie A">
+      <div id="widget-t7iwmiwajwu1" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=t7iwmiwajwu1&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2 – SERIE B -->
+    <div class="widget-slide" data-name="Classifica Serie B">
+      <div id="widget-rci4miwal5ot" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=rci4miwal5ot&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3 – CHAMPIONS -->
+    <div class="widget-slide" data-name="Classifica Champions League">
+      <div id="widget-9pq8miwaltan" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=9pq8miwaltan&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      </div>
+    </div>
   </div>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.widget-slide');
+  const titleEl = document.getElementById('widgetTitle');
+  let current = 0;
+  const intervalMs = 15000;   // 15 secondi per slide
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+    titleEl.textContent = slides[index].dataset.name;
+  }
+
+  showSlide(current);
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }, intervalMs);
+</script>
+
 </body>
 </html>
