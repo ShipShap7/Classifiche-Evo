@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: #000;     /* cambia in #fff se vuoi sfondo bianco */
+      background: #000;     /* sfondo bianco */
       overflow: hidden;
     }
 
@@ -21,7 +21,7 @@
       margin: 0 auto;
     }
 
-    /* NASCONDIAMO COMPLETAMENTE IL TITOLO */
+    /* NESSUN TITOLO */
     .widget-title {
       display: none !important;
     }
@@ -30,7 +30,7 @@
     .slider {
       position: relative;
       width: 100%;
-      height: min(65vh, 400px); /* regola l'altezza se vuoi più o meno spazio */
+      height: min(65vh, 400px); /* regolazione altezza per ottenere meno spazio */
       border-radius: 0;
       overflow: hidden;
       background: transparent !important;
@@ -53,7 +53,7 @@
       pointer-events: auto;
     }
 
-    /* forziamo i widget Scoreaxis a riempire l'area */
+    /* forzo i widget Scoreaxis a riempire l'area */
     .scoreaxis-widget {
       width: 100% !important;
       height: 100% !important;
@@ -137,14 +137,14 @@
       slide.classList.toggle('active', i === index);
     });
 
-    // anche se il titolo è nascosto, lasciamo aggiornamento (non dà problemi)
+    // anche se il titolo è nascosto, lascio aggiornamento (non dà problemi)
     if (titleEl) {
       titleEl.textContent = slides[index].dataset.name || '';
     }
 
     const slide = slides[index];
 
-    // diamo tempo al widget di disegnarsi
+    // tempo del widget per disegnarsi
     setTimeout(() => startAutoScroll(slide), 800);
   }
 
