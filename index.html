@@ -3,65 +3,114 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Classifiche</title>
+<title>Classifiche in loop</title>
 
 <style>
     body {
         font-family: Arial, sans-serif;
         background: #f7f7f7;
         margin: 0;
-        padding: 20px;
+        padding: 10px;
         text-align: center;
     }
 
     h2 {
-        margin-top: 40px;
+        margin: 10px 0 15px;
+        font-size: 18px;
     }
 
-    /* CONTENITORE RESPONSIVE */
+    /* WRAPPER CENTRALE */
+    .wrapper {
+        max-width: 500px;          /* larghezza max stile “finestra YouTube” */
+        margin: 0 auto;
+    }
+
+    /* CONTENITORE RESPONSIVE CON ASPECT-RATIO (tipo YouTube 16:9) */
     .widget-container {
+        position: relative;
         width: 100%;
-        max-width: 500px;
-        height: 550px;
-        margin: 0 auto 40px auto;
-        border: 1px solid #ccc;
+        /* 56.25% = 16:9 → puoi aumentare se vuoi uno spazio più alto */
+        padding-top: 125%;         /* più alto del 16:9 per far stare bene la tabella */
         border-radius: 10px;
         overflow: hidden;
-        background: #fff;
-        position: relative;
+        background: #ffffff;
+        border: 1px solid #ccc;
     }
 
-    /* IFRAME RESPONSIVE */
     .widget-frame {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         border: none;
-        overflow: hidden;
     }
 
-    /* Rimuove margini dei crediti di Scoreaxis */
+    /* CREDITI SCOREAXIS (io non li nasconderei per non rischiare problemi di TOS) */
     .widget-main-link {
         display: none !important;
     }
-</style>
 
+    /* Label piccola che indica quale classifica stai vedendo */
+    .widget-label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+</style>
 </head>
 <body>
 
-<h2>Classifica Serie A</h2>
-<div class="widget-container">
-    <iframe class="widget-frame" src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=sa_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"></iframe>
+<div class="wrapper">
+    <div class="widget-label" id="widgetLabel">Classifica Serie A</div>
+    <div class="widget-container">
+        <iframe
+            id="widgetFrame"
+            class="widget-frame"
+            src=""
+            loading="lazy"
+        ></iframe>
+    </div>
 </div>
 
-<h2>Classifica Serie B</h2>
-<div class="widget-container">
-    <iframe class="widget-frame" src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=sb_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"></iframe>
-</div>
+<script>
+    // URL dei 3 widget Scoreaxis
+    const widgets = [
+        {
+            name: 'Classifica Serie A',
+            url: 'https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=sa_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd'
+        },
+        {
+            name: 'Classifica Serie B',
+            url: 'https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=sb_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd'
+        },
+        {
+            name: 'Classifica Champions League',
+            url: 'https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=cl_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd'
+        }
+    ];
 
-<h2>Classifica Champions League</h2>
-<div class="widget-container">
-    <iframe class="widget-frame" src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=cl_widget&lang=en&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=400&widgetHeight=550&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd"></iframe>
-</div>
+    const frame = document.getElementById('widgetFrame');
+    const label = document.getElementById('widgetLabel');
+
+    let currentIndex = 0;
+    const intervalMs = 15000; // 15 secondi per ogni classifica (modifica a piacere)
+
+    function loadWidget(index) {
+        const w = widgets[index];
+        frame.src = w.url;
+        label.textContent = w.name;
+    }
+
+    // Primo caricamento
+    loadWidget(currentIndex);
+
+    // Loop automatico
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % widgets.length;
+        loadWidget(currentIndex);
+    }, intervalMs);
+</script>
 
 </body>
 </html>
