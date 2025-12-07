@@ -8,32 +8,35 @@
   <style>
     body {
       margin: 0;
-      padding: 10px;
+      padding: 8px;
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      background: #0b0b0b;
+      color: #fff;
       text-align: center;
     }
 
     .wrapper {
-      max-width: 500px;      /* larghezza tipo “finestra YouTube” */
+      /* larghezza massima tipo “finestra YouTube” */
+      max-width: 480px;
       margin: 0 auto;
     }
 
     .widget-title {
-      font-size: 18px;
-      margin: 5px 0 10px;
-      color: #333;
+      font-size: 16px;
+      margin: 4px 0 8px;
+      color: #f5f5f5;
     }
 
-    /* Contenitore “schermo” fisso */
+    /* Contenitore “schermo” responsive */
     .slider {
       position: relative;
       width: 100%;
-      height: 550px;         /* puoi aumentare o ridurre */
-      border-radius: 10px;
+      /* altezza proporzionale allo schermo + limite massimo */
+      height: min(60vh, 380px);
+      border-radius: 12px;
       overflow: hidden;
       background: #ffffff;
-      border: 1px solid #ccc;
+      border: 1px solid #444;
     }
 
     .widget-slide {
@@ -43,7 +46,7 @@
       height: 100%;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.7s ease-in-out;
       overflow: hidden;
     }
 
@@ -52,20 +55,29 @@
       pointer-events: auto;
     }
 
-    /* Forzo i widget Scoreaxis ad adattarsi al contenitore */
+    /* Adatto i widget Scoreaxis al contenitore */
     .scoreaxis-widget {
       width: 100% !important;
       height: 100% !important;
-      font-size: 14px;
-      background-color: #ffffff;
-      color: #141416;
-      border: 1px solid #ecf1f7;
-      overflow: auto;
+      font-size: 12px !important;
+      background-color: #ffffff !important;
+      color: #141416 !important;
+      border: none !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
     }
 
-    /* Se vuoi puoi tenere i crediti ma rimpicciolirli un po' */
+    /* Nascondo le scrollbar per estetica (se non ti piace, elimina questi blocchi) */
+    .scoreaxis-widget::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+    .scoreaxis-widget {
+      scrollbar-width: none; /* Firefox */
+    }
+
     .scoreaxis-widget .widget-main-link {
-      font-size: 11px;
+      font-size: 10px;
     }
   </style>
 </head>
@@ -77,25 +89,25 @@
   <div class="slider">
     <!-- SLIDE 1 – SERIE A -->
     <div class="widget-slide active" data-name="Classifica Serie A">
-      <div id="widget-t7iwmiwajwu1" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=t7iwmiwajwu1&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      <div id="widget-t7iwmiwajwu1" class="scoreaxis-widget" style="width:auto;height:auto;font-size:14px;background-color:#ffffff;color:#141416;border:1px solid;border-color:#ecf1f7;overflow:auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=t7iwmiwajwu1&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding:6px 12px;font-weight:500;">Live data by <a href="https://www.scoreaxis.com/" style="color:inherit;">Scoreaxis</a></div>
       </div>
     </div>
 
     <!-- SLIDE 2 – SERIE B -->
     <div class="widget-slide" data-name="Classifica Serie B">
-      <div id="widget-rci4miwal5ot" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=rci4miwal5ot&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      <div id="widget-rci4miwal5ot" class="scoreaxis-widget" style="width:auto;height:auto;font-size:14px;background-color:#ffffff;color:#141416;border:1px solid;border-color:#ecf1f7;overflow:auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=rci4miwal5ot&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding:6px 12px;font-weight:500;">Live data by <a href="https://www.scoreaxis.com/" style="color:inherit;">Scoreaxis</a></div>
       </div>
     </div>
 
     <!-- SLIDE 3 – CHAMPIONS -->
     <div class="widget-slide" data-name="Classifica Champions League">
-      <div id="widget-9pq8miwaltan" class="scoreaxis-widget" style="width: auto;height: auto;font-size: 14px;background-color: #ffffff;color: #141416;border: 1px solid;border-color: #ecf1f7;overflow: auto;">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=9pq8miwaltan&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link" style="padding: 6px 12px;font-weight: 500;">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+      <div id="widget-9pq8miwaltan" class="scoreaxis-widget" style="width:auto;height:auto;font-size:14px;background-color:#ffffff;color:#141416;border:1px solid;border-color:#ecf1f7;overflow:auto;">
+        <script src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=9pq8miwaltan&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+        <div class="widget-main-link" style="padding:6px 12px;font-weight:500;">Live data by <a href="https://www.scoreaxis.com/" style="color:inherit;">Scoreaxis</a></div>
       </div>
     </div>
   </div>
@@ -104,22 +116,76 @@
 <script>
   const slides = document.querySelectorAll('.widget-slide');
   const titleEl = document.getElementById('widgetTitle');
-  let current = 0;
-  const intervalMs = 15000;   // 15 secondi per slide
+
+  const SCROLL_DURATION_MS = 15000;      // tempo di scroll dal top al bottom
+  const PAUSE_AFTER_SCROLL_MS = 4000;    // pausa alla fine (4 secondi, come richiesto)
+
+  let currentIndex = 0;
+  let scrollAnimId = null;
+  let pauseTimeoutId = null;
+
+  function clearTimers() {
+    if (scrollAnimId !== null) {
+      cancelAnimationFrame(scrollAnimId);
+      scrollAnimId = null;
+    }
+    if (pauseTimeoutId !== null) {
+      clearTimeout(pauseTimeoutId);
+      pauseTimeoutId = null;
+    }
+  }
 
   function showSlide(index) {
+    clearTimers();
+
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === index);
     });
     titleEl.textContent = slides[index].dataset.name;
+
+    // diamo un attimo di tempo al widget per layout / caricamento
+    setTimeout(() => startAutoScroll(slides[index]), 800);
   }
 
-  showSlide(current);
+  function startAutoScroll(slide) {
+    const widget = slide.querySelector('.scoreaxis-widget');
+    if (!widget) return;
 
-  setInterval(() => {
-    current = (current + 1) % slides.length;
-    showSlide(current);
-  }, intervalMs);
+    // reset allo start
+    widget.scrollTop = 0;
+
+    const maxScroll = widget.scrollHeight - widget.clientHeight;
+    if (maxScroll <= 0) {
+      // niente da scrollare → direttamente passa alla prossima dopo la pausa
+      pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
+      return;
+    }
+
+    const startTime = performance.now();
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
+      widget.scrollTop = maxScroll * progress;
+
+      if (progress < 1) {
+        scrollAnimId = requestAnimationFrame(step);
+      } else {
+        // finito lo scroll → aspetta 4 secondi, poi cambia slide
+        pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
+      }
+    }
+
+    scrollAnimId = requestAnimationFrame(step);
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // avvio iniziale
+  showSlide(currentIndex);
 </script>
 
 </body>
