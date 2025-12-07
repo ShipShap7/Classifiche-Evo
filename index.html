@@ -1,22 +1,193 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Widget Scoreaxis</title>
-    <style>
-        html,body{height:100%;margin:0;background:#ffffff;}
-        .widget-wrapper{min-height:150px;display:flex;justify-content:center;align-items:center;}
-        .widget-main-link{padding:6px 12px;font-weight:500;}
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Classifiche Live - Rotazione</title>
+
+<style>
+  /* Layout generale */
+  html,body{height:100%;margin:0;padding:0;background:#ffffff;color:#141416;font-family:Arial,Helvetica,sans-serif}
+  .widget-container{width:100%;height:100vh;position:relative;overflow:hidden}
+
+  /* Ogni "schermata" che contiene un widget */
+  .widget{
+    position:absolute;
+    top:0;left:0;
+    width:100%;
+    height:100%;
+    opacity:0;
+    transition:opacity 1.2s ease;
+    overflow-y:scroll;           /* permette lo scroll interno lento */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior:smooth;
+    box-sizing:border-box;
+    padding:8px;
+    background:#ffffff;
+  }
+  .widget.active{opacity:1}
+
+  /* Forza il widget Scoreaxis a essere responsive */
+  .scoreaxis-widget{
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    box-sizing:border-box;
+  }
+
+  /* Link di credito */
+  .widget-main-link{padding:6px 12px;font-weight:500;text-align:center}
+
+  /* Regole per piccoli schermi */
+  @media (max-width:600px){
+    .scoreaxis-widget{font-size:12px !important}
+  }
+</style>
 </head>
 <body>
-    <div class="widget-wrapper">
-        <div id="widget-jkw5mirx42d1" class="scoreaxis-widget"></div>
+
+<div class="widget-container">
+
+  <!-- SERIE A -->
+  <div class="widget" id="w-0">
+    <div id="widget-q8nlmiv2pmvb" class="scoreaxis-widget" style="background:#fff;color:#141416;border:1px solid #ecf1f7;overflow:auto;">
+      <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=q8nlmiv2pmvb&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23000000&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+      <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/" target="_blank" rel="noopener" style="color:inherit">Scoreaxis</a></div>
     </div>
+  </div>
 
-    <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=jkw5mirx42d1&lang=it&teamLogo=1&tableLines=0&homeAway=0&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+  <!-- SERIE B -->
+  <div class="widget" id="w-1">
+    <div id="widget-osxtmiv2scpe" class="scoreaxis-widget" style="background:#fff;color:#141416;border:1px solid #ecf1f7;overflow:auto;">
+      <script src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=osxtmiv2scpe&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23000000&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+      <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/" target="_blank" rel="noopener" style="color:inherit">Scoreaxis</a></div>
+    </div>
+  </div>
 
-    <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/" style="color: inherit;">Scoreaxis</a></div>
+  <!-- CHAMPIONS LEAGUE -->
+  <div class="widget" id="w-2">
+    <div id="widget-hhnpmiv2t97y" class="scoreaxis-widget" style="background:#fff;color:#141416;border:1px solid #ecf1f7;overflow:auto;">
+      <script src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=hhnpmiv2t97y&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=1&gamesCount=1&diff=1&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=heebo&fontSize=14&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23000000&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
+      <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/" target="_blank" rel="noopener" style="color:inherit">Scoreaxis</a></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- IMPORTANTE: script che inizializza i widget (obbligatorio) -->
+<script src="https://widgets.scoreaxis.com/widget/core.js" async></script>
+
+<script>
+/*
+  Controllo rotazione widget:
+  - scorrimento lento automatico
+  - fade out/in tra widget
+  - loop infinito
+
+  Parametri modificabili:
+    scrollStepMs  -> intervallo in ms del tick di scorrimento (più basso = scorrimento più fluido)
+    scrollPxStep  -> quanti pixel scorrere ad ogni tick (più alto = più veloce)
+    pauseAfterEnd -> ms di pausa quando arriva in fondo prima di fade out
+    fadeDuration  -> ms durata fade (deve corrispondere alla transition CSS)
+    holdTime      -> ms da tenere la classifica ferma al top prima di iniziare lo scroll (opzionale)
+*/
+
+const widgets = Array.from(document.querySelectorAll('.widget'));
+let current = 0;
+
+const scrollStepMs = 30;      // intervallo tick (ms)
+const scrollPxStep = 1;       // pixel per tick -> aumenta per velocizzare lo scroll
+const pauseAfterEnd = 700;    // ms di pausa quando raggiunge il fondo prima di fade
+const fadeDuration = 1200;    // ms (deve essere in linea con transition CSS)
+const holdTime = 800;         // ms prima di iniziare lo scroll per ogni widget
+
+// Assicuriamoci che l'altezza dell'area di scorrimento sia adeguata
+function prepareWidget(w){
+  w.scrollTop = 0;
+  // Forziamo la larghezza del contenuto scoreaxis per adattarsi
+  const sa = w.querySelector('.scoreaxis-widget');
+  if(sa){
+    sa.style.width = '100%';
+    sa.style.maxWidth = '100%';
+  }
+}
+
+function startScrollFor(index){
+  const w = widgets[index];
+  if(!w) return;
+
+  prepareWidget(w);
+  // assicurati che la classe active sia presente (fade-in)
+  widgets.forEach((it, i) => it.classList.toggle('active', i === index));
+
+  // aspetta un momento prima di iniziare lo scroll
+  setTimeout(()=>{
+    // calcola target (quando scrollTop raggiunge il fondo)
+    const maxScroll = w.scrollHeight - w.clientHeight;
+    if(maxScroll <= 0){
+      // non c'è niente da scorrere -> aspetta un po' e vai al prossimo
+      setTimeout(()=>fadeToNext(index), pauseAfterEnd);
+      return;
+    }
+
+    // avvia scroller
+    let scroller = setInterval(()=>{
+      // se l'elemento viene rimosso o non esiste più -> pulisci
+      if(!document.body.contains(w)){ clearInterval(scroller); return; }
+
+      // scroll con limite all'ultimo pixel
+      w.scrollTop = Math.min(w.scrollTop + scrollPxStep, maxScroll);
+
+      // se arrivato in fondo
+      if(w.scrollTop >= maxScroll){
+        clearInterval(scroller);
+        // attesa prima del fade
+        setTimeout(()=>fadeToNext(index), pauseAfterEnd);
+      }
+    }, scrollStepMs);
+  }, holdTime);
+}
+
+function fadeToNext(currentIndex){
+  // fade-out: rimuovo active (CSS gestisce transition sull'opacità)
+  const currentWidget = widgets[currentIndex];
+  if(currentWidget) currentWidget.classList.remove('active');
+
+  // dopo la durata del fade, muoviamoci al prossimo
+  setTimeout(()=>{
+    // reset scroll del widget appena passato
+    if(currentWidget) currentWidget.scrollTop = 0;
+
+    // incrementa index e mostra il successivo
+    current = (current + 1) % widgets.length;
+    startScrollFor(current);
+  }, fadeDuration);
+}
+
+// Avvio iniziale: attendi che i widget esterni siano caricati (anche lo script core)
+function waitForInitializationAndStart(){
+  // se i widget non hanno contenuto (es. caricamento JS Scoreaxis), aspetta un po'
+  let checks = 0;
+  const maxChecks = 80; // timeout complessivo ~80 * 200ms = 16s
+  const checkInterval = setInterval(()=>{
+    checks++;
+    // consideriamo "pronto" quando il primo widget ha un scrollHeight > clientHeight * 1 o quando maxChecks raggiunto
+    const first = widgets[0];
+    if(first && (first.scrollHeight > first.clientHeight || checks >= maxChecks)){
+      clearInterval(checkInterval);
+      // start dal primo widget
+      startScrollFor(current);
+    }
+    // altrimenti continua ad aspettare
+  }, 200);
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  // inizializza gli stili interni per i widget
+  widgets.forEach(prepareWidget);
+  waitForInitializationAndStart();
+});
+</script>
+
 </body>
 </html>
