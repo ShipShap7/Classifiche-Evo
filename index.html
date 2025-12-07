@@ -10,29 +10,27 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: #000;     /* regolazione BG */
+      background: #000;     /* Colore BG */
       overflow: hidden;
     }
 
     /* wrapper trasparente e “invisibile” */
     .wrapper {
       width: 100%;
-      max-width: none;
-      margin: 0;
-      padding:0;
-      /*margin-left: -500px;
+      max-width: 500px;
+      margin: 0 auto;
     }
 
-    /* NESSUN TITOLO */
+    /* Nascondo il TITOLO */
     .widget-title {
       display: none !important;
     }
 
-    /* area visiva del widget (senza bordo, senza sfondo) */
+    /* area visiva del widget (niente bordo, niente sfondo) */
     .slider {
       position: relative;
       width: 100%;
-      height: min(65vh, 400px); /* regolazione altezza */
+      height: min(65vh, 400px); /* regolazione altezza e gestione dello spazio */
       border-radius: 0;
       overflow: hidden;
       background: transparent !important;
@@ -55,7 +53,7 @@
       pointer-events: auto;
     }
 
-    /* forzo i widget Scoreaxis a riempire l'area */
+    /* forzo i widget a riempire l'area */
     .scoreaxis-widget {
       width: 100% !important;
       height: 100% !important;
@@ -67,13 +65,13 @@
       overflow-x: hidden !important;
     }
 
-    /* no scrollbar (solo estetica) */
+    /* nascondo le scrollbar (solo estetica) */
     .scoreaxis-widget::-webkit-scrollbar {
       width: 0;
       height: 0;
     }
     .scoreaxis-widget {
-      scrollbar-width: none; /* Fire */
+      scrollbar-width: none; /* Firefox */
     }
   </style>
 </head>
@@ -139,14 +137,14 @@
       slide.classList.toggle('active', i === index);
     });
 
-    // anche se il titolo è nascosto, lascio aggiornam (non darà problemi)
+    // anche se il titolo è nascosto, lascio aggiornamento (non darà problemi)
     if (titleEl) {
       titleEl.textContent = slides[index].dataset.name || '';
     }
 
     const slide = slides[index];
 
-    // diamo tempo al widget di disegnarsi
+    // Imposto tempo al widget per generarsi
     setTimeout(() => startAutoScroll(slide), 800);
   }
 
