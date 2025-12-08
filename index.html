@@ -182,33 +182,21 @@
       return;
     }
 
-    // 🔑 calcoliamo la posizione specifica per avere l'ULTIMA squadra visibile
-    function getTargetScroll() {
-      const lastRow = widget.querySelector('tbody tr:last-child');
-      if (lastRow) {
-        const rowBottom = lastRow.offsetTop + lastRow.offsetHeight;
-        // vogliamo che il bottom dell’ultima riga cada dentro la finestra visibile
-        return Math.max(0, rowBottom - widget.clientHeight + 8);
-      }
-      // fallback se non troviamo la tabella
-      return Math.max(0, widget.scrollHeight - widget.clientHeight + 8);
-    }
-
     const startTime = performance.now();
+    const TARGET_SCROLL = 100000; // valore enorme: il browser lo "clampa" al massimo possibile
 
     function step(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / cfg.duration, 1);
 
-      // ricalcoliamo il target ad ogni frame (il widget può “crescere” un po’)
-      const targetScroll = getTargetScroll();
-      widget.scrollTop = targetScroll * progress;
+      // scorriamo da 0 a un valore molto grande:
+      // il browser fermerà lo scroll esattamente al fondo
+      widget.scrollTop = TARGET_SCROLL * progress;
 
       if (progress < 1) {
         scrollAnimId = requestAnimationFrame(step);
       } else {
-        // quando finisce, assicuriamoci di essere al fondo calcolato
-        widget.scrollTop = getTargetScroll();
+        widget.scrollTop = TARGET_SCROLL; // assicuriamoci di essere al massimo
         // pausa DOPO lo scroll, prima di passare alla prossima classifica
         pauseTimeoutId = setTimeout(nextSlide, cfg.after);
       }
