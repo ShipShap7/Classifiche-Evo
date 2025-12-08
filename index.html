@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
-      background: #000;     /* sfondo bianco */
+      background: #000;     /* sfondo nero, puoi mettere #fff */
       overflow: hidden;
     }
 
@@ -30,7 +30,7 @@
     .slider {
       position: relative;
       width: 100%;
-      height: min(65vh, 400px); /* regolazione altezza per ottenere meno spazio */
+      height: min(65vh, 400px); /* regolazione altezza */
       border-radius: 0;
       overflow: hidden;
       background: transparent !important;
@@ -112,12 +112,20 @@
   const slides = document.querySelectorAll('.widget-slide');
   const titleEl = document.getElementById('widgetTitle');
 
-  const SCROLL_DURATION_MS = 15000;      // tempo scroll
-  const PAUSE_AFTER_SCROLL_MS = 4000;    // pausa a fine scroll
+  // Config per ogni classifica (in ordine: Serie A, Serie B, Champions)
+  // before = pausa prima che inizi lo scroll (ms)
+  // duration = durata dello scroll (ms)
+  // after = pausa finale, dopo lo scroll, prima di passare alla successiva (ms)
+  const SCROLL_CONFIG = [
+    { before: 3000, duration: 15000, after: 4000 }, // Serie A
+    { before: 3000, duration: 15000, after: 4000 }, // Serie B
+    { before: 3000, duration: 22000, after: 4000 }, // Champions (più lenta)
+  ];
 
   let currentIndex = 0;
   let scrollAnimId = null;
   let pauseTimeoutId = null;
+  let beforeTimeoutId = null;
 
   function clearTimers() {
     if (scrollAnimId !== null) {
@@ -128,6 +136,10 @@
       clearTimeout(pauseTimeoutId);
       pauseTimeoutId = null;
     }
+    if (beforeTimeoutId !== null) {
+      clearTimeout(beforeTimeoutId);
+      beforeTimeoutId = null;
+    }
   }
 
   function showSlide(index) {
@@ -137,52 +149,61 @@
       slide.classList.toggle('active', i === index);
     });
 
-    // anche se il titolo è nascosto, lascio aggiornamento (non dà problemi)
+    // il titolo è nascosto, ma lo aggiorno comunque (non dà fastidio)
     if (titleEl) {
       titleEl.textContent = slides[index].dataset.name || '';
     }
 
     const slide = slides[index];
+    const cfg = SCROLL_CONFIG[index] || { before: 1000, duration: 15000, after: 4000 };
 
-    // tempo del widget per disegnarsi
-    setTimeout(() => startAutoScroll(slide), 800);
+    // piccola attesa per dare tempo al widget di disegnarsi
+    const INTERNAL_DELAY = 800;
+
+    // pausa PRIMA di iniziare lo scroll (personalizzata per slide)
+    beforeTimeoutId = setTimeout(() => {
+      startAutoScroll(slide, cfg);
+    }, cfg.before + INTERNAL_DELAY);
   }
 
-function startAutoScroll(slide) {
-  const widget = slide.querySelector('.scoreaxis-widget');
-  if (!widget) return;
-
-  widget.scrollTop = 0;
-
-  // se non c'è nulla da scrollare, passa dopo la pausa
-  if (widget.scrollHeight <= widget.clientHeight) {
-    pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
-    return;
-  }
-
-  const startTime = performance.now();
-
-  function step(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-
-    // 🔑 ricalcolo maxScroll ad ogni frame, così includo anche
-    // loghi, font, righe che si caricano in ritardo
-    const maxScroll = widget.scrollHeight - widget.clientHeight;
-
-    widget.scrollTop = maxScroll * progress;
-
-    if (progress < 1) {
-      scrollAnimId = requestAnimationFrame(step);
-    } else {
-      // per sicurezza spingiamo un filo oltre (se ci sono arrotondamenti)
-      widget.scrollTop = maxScroll + 50;
-      pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
+  function startAutoScroll(slide, cfg) {
+    const widget = slide.querySelector('.scoreaxis-widget');
+    if (!widget) {
+      // se non troviamo il widget, saltiamo alla successiva dopo la pausa finale
+      pauseTimeoutId = setTimeout(nextSlide, cfg.after);
+      return;
     }
-  }
 
-  scrollAnimId = requestAnimationFrame(step);
-}
+    widget.scrollTop = 0;
+
+    // se non c'è nulla da scrollare, passa direttamente dopo la pausa finale
+    if (widget.scrollHeight <= widget.clientHeight) {
+      pauseTimeoutId = setTimeout(nextSlide, cfg.after);
+      return;
+    }
+
+    const startTime = performance.now();
+
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / cfg.duration, 1);
+
+      // ricalcolo maxScroll ad ogni frame per seguire gli aggiustamenti del widget
+      const maxScroll = widget.scrollHeight - widget.clientHeight;
+      widget.scrollTop = maxScroll * progress;
+
+      if (progress < 1) {
+        scrollAnimId = requestAnimationFrame(step);
+      } else {
+        // per sicurezza, “spingiamo” al fondo
+        widget.scrollTop = maxScroll + 50;
+        // pausa DOPO lo scroll, prima di passare alla prossima classifica
+        pauseTimeoutId = setTimeout(nextSlide, cfg.after);
+      }
+    }
+
+    scrollAnimId = requestAnimationFrame(step);
+  }
 
   function nextSlide() {
     currentIndex = (currentIndex + 1) % slides.length;
