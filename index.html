@@ -148,35 +148,41 @@
     setTimeout(() => startAutoScroll(slide), 800);
   }
 
-  function startAutoScroll(slide) {
-    const widget = slide.querySelector('.scoreaxis-widget');
-    if (!widget) return;
+function startAutoScroll(slide) {
+  const widget = slide.querySelector('.scoreaxis-widget');
+  if (!widget) return;
 
-    widget.scrollTop = 0;
+  widget.scrollTop = 0;
+
+  // se non c'è nulla da scrollare, passa dopo la pausa
+  if (widget.scrollHeight <= widget.clientHeight) {
+    pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
+    return;
+  }
+
+  const startTime = performance.now();
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
+
+    // 🔑 ricalcolo maxScroll ad ogni frame, così includo anche
+    // loghi, font, righe che si caricano in ritardo
     const maxScroll = widget.scrollHeight - widget.clientHeight;
 
-    if (maxScroll <= 0) {
+    widget.scrollTop = maxScroll * progress;
+
+    if (progress < 1) {
+      scrollAnimId = requestAnimationFrame(step);
+    } else {
+      // per sicurezza spingiamo un filo oltre (se ci sono arrotondamenti)
+      widget.scrollTop = maxScroll + 50;
       pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
-      return;
     }
-
-    const startTime = performance.now();
-
-    function step(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / SCROLL_DURATION_MS, 1);
-      widget.scrollTop = maxScroll * progress;
-
-      if (progress < 1) {
-        scrollAnimId = requestAnimationFrame(step);
-      } else {
-        widget.scrollTop = maxScroll;
-        pauseTimeoutId = setTimeout(nextSlide, PAUSE_AFTER_SCROLL_MS);
-      }
-    }
-
-    scrollAnimId = requestAnimationFrame(step);
   }
+
+  scrollAnimId = requestAnimationFrame(step);
+}
 
   function nextSlide() {
     currentIndex = (currentIndex + 1) % slides.length;
