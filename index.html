@@ -34,7 +34,7 @@
       border: none !important;
     }
 
-    /* ⭐ Fade più morbido e leggero zoom */
+    /* Fade più morbido e leggero zoom */
     .widget-slide {
       position: absolute;
       inset: 0;
@@ -78,10 +78,10 @@
     }
 
     /* 📱 Margine destro SOLO sulla versione smartphone
-       (la tua TV ha width CSS <= 768, lo smartphone > 768) */
-    @media (min-width: 769px) {
+       (TV ha width CSS <= 768, smartphone > 768) */
+    @media (min-width: 770px) {
       .scoreaxis-widget {
-        padding-right: 32px !important;  /* aumenta o riduci se serve */
+        padding-right: 32px !important;  /* aumentare o ridurre se serve */
       }
     }
   </style>
@@ -155,7 +155,7 @@
 
     const slide = slides[index];
     const cfg = SCROLL_CONFIG[index];
-    const INTERNAL_DELAY = 800; // porta a 1200ms se vedi ancora ritardi nel rendering
+    const INTERNAL_DELAY = 800; // portare a 1200ms se ci sono ancora ritardi nel rendering
 
     beforeTimeoutId = setTimeout(() => {
       startAutoScroll(slide, cfg);
