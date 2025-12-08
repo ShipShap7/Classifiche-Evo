@@ -183,20 +183,20 @@
     }
 
     const startTime = performance.now();
-    const TARGET_SCROLL = 100000; // valore enorme: il browser lo "clampa" al massimo possibile
 
     function step(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / cfg.duration, 1);
 
-      // scorriamo da 0 a un valore molto grande:
-      // il browser fermerà lo scroll esattamente al fondo
-      widget.scrollTop = TARGET_SCROLL * progress;
+      // ricalcolo maxScroll ad ogni frame per seguire gli aggiustamenti del widget
+      const maxScroll = widget.scrollHeight - widget.clientHeight;
+      widget.scrollTop = maxScroll * progress;
 
       if (progress < 1) {
         scrollAnimId = requestAnimationFrame(step);
       } else {
-        widget.scrollTop = TARGET_SCROLL; // assicuriamoci di essere al massimo
+        // per sicurezza, “spingiamo” al fondo
+        widget.scrollTop = maxScroll + 50;
         // pausa DOPO lo scroll, prima di passare alla prossima classifica
         pauseTimeoutId = setTimeout(nextSlide, cfg.after);
       }
