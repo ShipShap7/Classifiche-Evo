@@ -76,6 +76,14 @@
     .scoreaxis-widget {
       scrollbar-width: none;
     }
+
+    /* 📱 Margine destro SOLO su smartphone */
+    @media (max-width: 768px) {
+      .scoreaxis-widget {
+        padding-right: 32px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -114,7 +122,6 @@
   const slides = document.querySelectorAll('.widget-slide');
   const titleEl = document.getElementById('widgetTitle');
 
-  /* Scroll molto più fluido: easing */
   function easeInOutQuad(t) {
     return t < 0.5
       ? 2 * t * t
@@ -144,7 +151,7 @@
     slides.forEach((slide, i) =>
       slide.classList.toggle('active', i === index)
     );
- /* const INTERNAL_DELAY aumentare a 1200 se i widget si generano in ritardo rispetto allo scroll */
+
     const slide = slides[index];
     const cfg = SCROLL_CONFIG[index];
     const INTERNAL_DELAY = 800;
