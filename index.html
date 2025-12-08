@@ -77,13 +77,13 @@
       scrollbar-width: none;
     }
 
-    /* 📱 Margine destro SOLO su smartphone */
-    @media (max-width: 768px) {
+    /* 📱 Margine destro SOLO sulla versione smartphone
+       (la tua TV ha width CSS <= 768, lo smartphone > 768) */
+    @media (min-width: 769px) {
       .scoreaxis-widget {
-        padding-right: 77px !important;
+        padding-right: 32px !important;  /* aumenta o riduci se serve */
       }
     }
-
   </style>
 </head>
 <body>
@@ -122,6 +122,7 @@
   const slides = document.querySelectorAll('.widget-slide');
   const titleEl = document.getElementById('widgetTitle');
 
+  /* Scroll molto più fluido: easing */
   function easeInOutQuad(t) {
     return t < 0.5
       ? 2 * t * t
@@ -154,7 +155,7 @@
 
     const slide = slides[index];
     const cfg = SCROLL_CONFIG[index];
-    const INTERNAL_DELAY = 800;
+    const INTERNAL_DELAY = 800; // porta a 1200ms se vedi ancora ritardi nel rendering
 
     beforeTimeoutId = setTimeout(() => {
       startAutoScroll(slide, cfg);
