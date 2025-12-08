@@ -54,16 +54,18 @@
     }
 
     /* forzo i widget Scoreaxis a riempire l'area */
-    .scoreaxis-widget {
-      width: 100% !important;
-      height: 100% !important;
-      font-size: 12px !important;
-      background-color: #ffffff !important;
-      color: #141416 !important;
-      border: none !important;
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-    }
+.scoreaxis-widget {
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 12px !important;
+  background-color: #ffffff !important;
+  color: #141416 !important;
+  border: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  padding-bottom: 50px !important;  /* ← AGGIUNTO: “rialza” l’ultima riga */
+}
 
     /* nascondo le scrollbar (solo estetica) */
     .scoreaxis-widget::-webkit-scrollbar {
