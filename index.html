@@ -191,7 +191,7 @@
         return Math.max(0, rowBottom - widget.clientHeight + 8);
       }
       // fallback se non troviamo la tabella
-      return Math.max(0, widget.scrollHeight - widget.clientHeight);
+      return Math.max(0, widget.scrollHeight - widget.clientHeight + 8);
     }
 
     const startTime = performance.now();
