@@ -126,38 +126,27 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 120px;
+      max-width: 140px;
     }
 
     .pos-cell { width: 24px; font-weight: 600; }
     .points-cell { font-weight: 700; }
 
-    .form-cell {
-      display: flex;
-      gap: 2px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .form-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .form-W { background: #22c55e; }
-    .form-D { background: #f59e0b; }
-    .form-L { background: #ef4444; }
-
     .widget-footer {
       text-align: center;
-      padding: 8px;
+      padding: 8px 8px 4px;
       font-size: 10px;
       color: #999;
     }
 
     .widget-footer a { color: #141416; text-decoration: none; }
+
+    .last-updated {
+      text-align: center;
+      padding: 2px 8px 10px;
+      font-size: 10px;
+      color: #aaa;
+    }
 
     .loading {
       display: flex;
@@ -212,31 +201,28 @@
       return;
     }
 
-    const rows = table.table.map(entry => {
-      const form = (entry.form || '').split(',').filter(Boolean).slice(-5);
-      const formHtml = form.map(r => {
-        const cls = r === 'W' ? 'form-W' : r === 'D' ? 'form-D' : 'form-L';
-        return `<span class="form-dot ${cls}"></span>`;
-      }).join('');
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = `${hh}:${mm}`;
 
-      return `
-        <tr>
-          <td class="pos-cell">${entry.position}</td>
-          <td class="team-col">
-            <img class="team-logo"
-                 src="${entry.team.crest}"
-                 alt="${entry.team.shortName}"
-                 onerror="this.style.display='none'" />
-            <span class="team-name">${entry.team.shortName || entry.team.name}</span>
-          </td>
-          <td>${entry.playedGames}</td>
-          <td>${entry.won}</td>
-          <td>${entry.draw}</td>
-          <td>${entry.lost}</td>
-          <td class="points-cell">${entry.points}</td>
-          <td><div class="form-cell">${formHtml}</div></td>
-        </tr>`;
-    }).join('');
+    const rows = table.table.map(entry => `
+      <tr>
+        <td class="pos-cell">${entry.position}</td>
+        <td class="team-col">
+          <img class="team-logo"
+               src="${entry.team.crest}"
+               alt="${entry.team.shortName}"
+               onerror="this.style.display='none'" />
+          <span class="team-name">${entry.team.shortName || entry.team.name}</span>
+        </td>
+        <td>${entry.playedGames}</td>
+        <td>${entry.won}</td>
+        <td>${entry.draw}</td>
+        <td>${entry.lost}</td>
+        <td class="points-cell">${entry.points}</td>
+      </tr>`
+    ).join('');
 
     container.innerHTML = `
       <table class="standings-table">
@@ -249,14 +235,14 @@
             <th>N</th>
             <th>P</th>
             <th>Pts</th>
-            <th>Forma</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
       <div class="widget-footer">
         Live data by <a href="https://www.football-data.org/">football-data.org</a>
-      </div>`;
+      </div>
+      <div class="last-updated">Aggiornato alle ${timeStr}</div>`;
   }
 
   async function loadSlide(slide) {
