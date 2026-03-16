@@ -68,7 +68,6 @@
       .standings-widget { padding-right: 32px; }
     }
 
-    /* Tabella classifica */
     .standings-table {
       width: 100%;
       border-collapse: collapse;
@@ -130,16 +129,8 @@
       max-width: 120px;
     }
 
-    .pos-cell {
-      width: 24px;
-      font-weight: 600;
-      color: #141416;
-    }
-
-    .points-cell {
-      font-weight: 700;
-      color: #141416;
-    }
+    .pos-cell { width: 24px; font-weight: 600; }
+    .points-cell { font-weight: 700; }
 
     .form-cell {
       display: flex;
@@ -166,10 +157,7 @@
       color: #999;
     }
 
-    .widget-footer a {
-      color: #141416;
-      text-decoration: none;
-    }
+    .widget-footer a { color: #141416; text-decoration: none; }
 
     .loading {
       display: flex;
@@ -204,14 +192,7 @@
       </div>
     </div>
 
-    <!-- SLIDE 2 – SERIE B -->
-    <div class="widget-slide" data-src="data/europa.json" data-name="Europa League">
-      <div class="standings-widget">
-        <div class="loading">Caricamento Europa League…</div>
-      </div>
-    </div>
-
-    <!-- SLIDE 3 – CHAMPIONS -->
+    <!-- SLIDE 2 – CHAMPIONS -->
     <div class="widget-slide" data-src="data/champions.json" data-name="Champions League">
       <div class="standings-widget">
         <div class="loading">Caricamento Champions League…</div>
@@ -224,7 +205,6 @@
 <script>
   const slides = document.querySelectorAll('.widget-slide');
 
-  // ── Rendering classifica ──────────────────────────────────────────
   function renderStandings(container, json) {
     const table = json.standings?.find(s => s.type === 'TOTAL');
     if (!table) {
@@ -279,7 +259,6 @@
       </div>`;
   }
 
-  // ── Caricamento JSON ──────────────────────────────────────────────
   async function loadSlide(slide) {
     const src = slide.dataset.src;
     const container = slide.querySelector('.standings-widget');
@@ -296,13 +275,11 @@
     }
   }
 
-  // ── Slider ────────────────────────────────────────────────────────
   function easeInOutQuad(t) {
     return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
 
   const SCROLL_CONFIG = [
-    { before: 3000, duration: 15000, after: 4000 },
     { before: 3000, duration: 15000, after: 4000 },
     { before: 3000, duration: 22000, after: 4000 }
   ];
@@ -367,7 +344,6 @@
     showSlide(currentIndex);
   }
 
-  // Precarica tutte le slide all'avvio
   slides.forEach(s => loadSlide(s));
   showSlide(currentIndex);
 </script>
