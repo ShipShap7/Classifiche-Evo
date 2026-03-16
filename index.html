@@ -20,10 +20,6 @@
       margin: 0 auto;
     }
 
-    .widget-title {
-      display: none !important;
-    }
-
     .slider {
       position: relative;
       width: 100%;
@@ -34,7 +30,6 @@
       border: none !important;
     }
 
-    /* Fade più morbido e leggero zoom */
     .widget-slide {
       position: absolute;
       inset: 0;
@@ -43,9 +38,7 @@
       opacity: 0;
       pointer-events: none;
       transform: scale(1.01);
-      transition:
-        opacity 1s ease-in-out,
-        transform 1s ease-in-out;
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
       overflow: hidden;
     }
 
@@ -55,78 +48,257 @@
       transform: scale(1);
     }
 
-    /* widget */
-    .scoreaxis-widget {
-      width: 100% !important;
-      height: 100% !important;
-      font-size: 12px !important;
-      background-color: #ffffff !important;
-      color: #141416 !important;
-      border: none !important;
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-      box-sizing: border-box !important;
-      padding-bottom: 50px !important;
+    .standings-widget {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      color: #141416;
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      padding-bottom: 50px;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 12px;
     }
 
-    .scoreaxis-widget::-webkit-scrollbar {
-      width: 0;
-      height: 0;
-    }
-    .scoreaxis-widget {
-      scrollbar-width: none;
-    }
+    .standings-widget::-webkit-scrollbar { width: 0; height: 0; }
+    .standings-widget { scrollbar-width: none; }
 
-    /* 📱 Margine destro SOLO sulla versione smartphone
-       (TV ha width CSS <= 768, smartphone > 768) */
     @media (min-width: 770px) {
-      .scoreaxis-widget {
-        padding-right: 32px !important;  /* aumentare o ridurre se serve */
-      }
+      .standings-widget { padding-right: 32px; }
+    }
+
+    /* Tabella classifica */
+    .standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .standings-table thead tr {
+      background-color: #f3f8fd;
+      color: #141416;
+      font-size: 11px;
+    }
+
+    .standings-table thead th {
+      padding: 6px 4px;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: 1px solid #ecf1f7;
+    }
+
+    .standings-table thead th.team-col {
+      text-align: left;
+      padding-left: 8px;
+    }
+
+    .standings-table tbody tr {
+      border-bottom: 1px solid #ecf1f7;
+      transition: background 0.2s;
+    }
+
+    .standings-table tbody tr:hover {
+      background-color: #f9fbff;
+    }
+
+    .standings-table tbody td {
+      padding: 5px 4px;
+      text-align: center;
+      color: #141416;
+    }
+
+    .standings-table tbody td.team-col {
+      text-align: left;
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .team-logo {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .team-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
+    }
+
+    .pos-cell {
+      width: 24px;
+      font-weight: 600;
+      color: #141416;
+    }
+
+    .points-cell {
+      font-weight: 700;
+      color: #141416;
+    }
+
+    .form-cell {
+      display: flex;
+      gap: 2px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .form-W { background: #22c55e; }
+    .form-D { background: #f59e0b; }
+    .form-L { background: #ef4444; }
+
+    .widget-footer {
+      text-align: center;
+      padding: 8px;
+      font-size: 10px;
+      color: #999;
+    }
+
+    .widget-footer a {
+      color: #141416;
+      text-decoration: none;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 13px;
+      color: #999;
+    }
+
+    .error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 12px;
+      color: #ef4444;
+      padding: 16px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
 <div class="wrapper">
-  <div id="widgetTitle" class="widget-title">Classifica Serie A</div>
-
   <div class="slider">
+
     <!-- SLIDE 1 – SERIE A -->
-    <div class="widget-slide active" data-name="Classifica Serie A">
-      <div id="widget-t7iwmiwajwu1" class="scoreaxis-widget">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/62322b827aee66235a2be718?widgetId=t7iwmiwajwu1&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/">Scoreaxis</a></div>
+    <div class="widget-slide active" data-src="data/seriea.json" data-name="Serie A">
+      <div class="standings-widget">
+        <div class="loading">Caricamento Serie A…</div>
       </div>
     </div>
 
     <!-- SLIDE 2 – SERIE B -->
-    <div class="widget-slide" data-name="Classifica Serie B">
-      <div id="widget-rci4miwal5ot" class="scoreaxis-widget">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/62321ed77200b25ca50e49d6?widgetId=rci4miwal5ot&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/">Scoreaxis</a></div>
+    <div class="widget-slide" data-src="data/serieb.json" data-name="Serie B">
+      <div class="standings-widget">
+        <div class="loading">Caricamento Serie B…</div>
       </div>
     </div>
 
     <!-- SLIDE 3 – CHAMPIONS -->
-    <div class="widget-slide" data-name="Classifica Champions League">
-      <div id="widget-9pq8miwaltan" class="scoreaxis-widget">
-        <script src="https://widgets.scoreaxis.com/api/football/league-table/6232267fbf1fa71a67215dfc?widgetId=9pq8miwaltan&lang=it&teamLogo=1&tableLines=0&homeAway=1&header=0&position=1&goals=0&gamesCount=1&diff=0&winCount=1&drawCount=1&loseCount=1&lastGames=1&points=1&teamsLimit=all&links=1&font=roboto&fontSize=12&widgetWidth=auto&widgetHeight=auto&bodyColor=%23ffffff&textColor=%23141416&linkColor=%23141416&borderColor=%23ecf1f7&tabColor=%23f3f8fd" async></script>
-        <div class="widget-main-link">Live data by <a href="https://www.scoreaxis.com/">Scoreaxis</a></div>
+    <div class="widget-slide" data-src="data/champions.json" data-name="Champions League">
+      <div class="standings-widget">
+        <div class="loading">Caricamento Champions League…</div>
       </div>
     </div>
+
   </div>
 </div>
 
 <script>
   const slides = document.querySelectorAll('.widget-slide');
-  const titleEl = document.getElementById('widgetTitle');
 
-  /* Scroll molto più fluido: easing */
+  // ── Rendering classifica ──────────────────────────────────────────
+  function renderStandings(container, json) {
+    const table = json.standings?.find(s => s.type === 'TOTAL');
+    if (!table) {
+      container.innerHTML = '<div class="error">Dati non disponibili.</div>';
+      return;
+    }
+
+    const rows = table.table.map(entry => {
+      const form = (entry.form || '').split(',').filter(Boolean).slice(-5);
+      const formHtml = form.map(r => {
+        const cls = r === 'W' ? 'form-W' : r === 'D' ? 'form-D' : 'form-L';
+        return `<span class="form-dot ${cls}"></span>`;
+      }).join('');
+
+      return `
+        <tr>
+          <td class="pos-cell">${entry.position}</td>
+          <td class="team-col">
+            <img class="team-logo"
+                 src="${entry.team.crest}"
+                 alt="${entry.team.shortName}"
+                 onerror="this.style.display='none'" />
+            <span class="team-name">${entry.team.shortName || entry.team.name}</span>
+          </td>
+          <td>${entry.playedGames}</td>
+          <td>${entry.won}</td>
+          <td>${entry.draw}</td>
+          <td>${entry.lost}</td>
+          <td class="points-cell">${entry.points}</td>
+          <td><div class="form-cell">${formHtml}</div></td>
+        </tr>`;
+    }).join('');
+
+    container.innerHTML = `
+      <table class="standings-table">
+        <thead>
+          <tr>
+            <th class="pos-cell">#</th>
+            <th class="team-col">Squadra</th>
+            <th>PG</th>
+            <th>V</th>
+            <th>N</th>
+            <th>P</th>
+            <th>Pts</th>
+            <th>Forma</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div class="widget-footer">
+        Live data by <a href="https://www.football-data.org/">football-data.org</a>
+      </div>`;
+  }
+
+  // ── Caricamento JSON ──────────────────────────────────────────────
+  async function loadSlide(slide) {
+    const src = slide.dataset.src;
+    const container = slide.querySelector('.standings-widget');
+    if (!src || container.dataset.loaded) return;
+
+    try {
+      const res = await fetch(src + '?v=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      renderStandings(container, json);
+      container.dataset.loaded = '1';
+    } catch (e) {
+      container.innerHTML = '<div class="error">Errore nel caricamento dei dati.<br>Riprova più tardi.</div>';
+    }
+  }
+
+  // ── Slider ────────────────────────────────────────────────────────
   function easeInOutQuad(t) {
-    return t < 0.5
-      ? 2 * t * t
-      : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }
 
   const SCROLL_CONFIG = [
@@ -148,29 +320,23 @@
 
   function showSlide(index) {
     clearTimers();
-
-    slides.forEach((slide, i) =>
-      slide.classList.toggle('active', i === index)
-    );
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
 
     const slide = slides[index];
     const cfg = SCROLL_CONFIG[index];
-    const INTERNAL_DELAY = 800; // portare a 1200ms se ci sono ancora ritardi nel rendering
+
+    loadSlide(slide);
 
     beforeTimeoutId = setTimeout(() => {
       startAutoScroll(slide, cfg);
-    }, cfg.before + INTERNAL_DELAY);
+    }, cfg.before + 800);
   }
 
   function startAutoScroll(slide, cfg) {
-    const widget = slide.querySelector('.scoreaxis-widget');
-    if (!widget) {
-      pauseTimeoutId = setTimeout(nextSlide, cfg.after);
-      return;
-    }
+    const widget = slide.querySelector('.standings-widget');
+    if (!widget) { pauseTimeoutId = setTimeout(nextSlide, cfg.after); return; }
 
     widget.scrollTop = 0;
-
     if (widget.scrollHeight <= widget.clientHeight) {
       pauseTimeoutId = setTimeout(nextSlide, cfg.after);
       return;
@@ -182,7 +348,6 @@
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / cfg.duration, 1);
       const eased = easeInOutQuad(progress);
-
       const maxScroll = widget.scrollHeight - widget.clientHeight;
       widget.scrollTop = maxScroll * eased;
 
@@ -202,6 +367,8 @@
     showSlide(currentIndex);
   }
 
+  // Precarica tutte le slide all'avvio
+  slides.forEach(s => loadSlide(s));
   showSlide(currentIndex);
 </script>
 
