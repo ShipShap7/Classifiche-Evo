@@ -24,8 +24,8 @@ jobs:
             -o data/seriea.json
 
           curl -s -H "X-Auth-Token: $API_KEY" \
-            "https://api.football-data.org/v4/competitions/SB/standings" \
-            -o data/serieb.json
+            ""https://api.football-data.org/v4/competitions/EL/standings" \
+            -o data/europa.json
 
           curl -s -H "X-Auth-Token: $API_KEY" \
             "https://api.football-data.org/v4/competitions/CL/standings" \
